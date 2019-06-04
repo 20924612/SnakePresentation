@@ -22,7 +22,7 @@ public class Food implements ActionListener {
     private Timer timer;
     private int deltaTime;
 
-    public Food(boolean special, Snake snake) {
+    public Food(boolean special, Snake snake, Snake snake2) {
         randomRow = 0;
         randomCol = 0;
         special = false;

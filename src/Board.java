@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -26,29 +27,19 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         //snake2.move();
         makeCollision();
 
-        if (snake.eatedFood(food)) {
-            if (specialFood != null && snake.eatedFood(specialFood) == true) {
-                snake.growSnake(5);
-                snake.eatFood = false;
-                scoreBoard1.increment(5);
-            }
+        if (snake.eatedFood(food) || snake2.eatedFood(food)) {
             if (snake.eatedFood(food) == true) {
                 snake.growSnake(1);
                 food.generatePosition(snake, snake2, wall);
                 snake.eatFood = false;
                 scoreBoard1.increment(1);
-
-            }
-            if (specialFood != null && snake2.eatedFood(specialFood) == true) {
-                snake2.growSnake(5);
-                snake2.eatFood = false;
-                scoreBoard2.increment(5);
             }
             if (snake2.eatedFood(food) == true) {
                 snake2.growSnake(1);
                 food.generatePosition(snake, snake2, wall);
                 snake2.eatFood = false;
                 scoreBoard2.increment(1);
+
             }
         }
 
@@ -136,14 +127,13 @@ public class Board extends javax.swing.JPanel implements ActionListener {
     private Main main;
     private ConfigDialog configDialog;
     private Wall wall;
-    private SpecialFood specialFood;
 
     public Board() {
         super();
         snake = new Snake(5);
         snake2 = new Snake(5);
         wall = new Wall();
-        food = new Food(true, snake);
+        food = new Food(false, snake, snake2);
         deltaTime = 150;
         timer = new Timer(deltaTime, this);
         snake.setDirection(direction.UP);
@@ -171,8 +161,8 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         configDialog = new ConfigDialog(main, true, this);
 
     }
-    
-    public void startGame(){
+
+    public void startGame() {
         timer.start();
     }
 
@@ -248,7 +238,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
             }
         }
 
-        if (snake.getBody().get(0).getRow() >= 30 || snake.getBody().get(0).getRow() <= 0 || snake.getBody().get(0).getCol() >= 40 || snake.getBody().get(0).getCol() <= 0) {
+        if (snake.getBody().get(0).getRow() > 30 || snake.getBody().get(0).getRow() < 0 || snake.getBody().get(0).getCol() > 40 || snake.getBody().get(0).getCol() < 0) {
             gameOver();
         }
 
@@ -259,7 +249,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
             }
         }
 
-        if (snake2.getBody().get(0).getRow() >= 30 || snake2.getBody().get(0).getRow() <= 0 || snake2.getBody().get(0).getCol() >= 40 || snake2.getBody().get(0).getCol() <= 0) {
+        if (snake2.getBody().get(0).getRow() > 30 || snake2.getBody().get(0).getRow() < 0 || snake2.getBody().get(0).getCol() > 40 || snake2.getBody().get(0).getCol() < 0) {
             gameOver();
         }
     }
