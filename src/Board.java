@@ -146,7 +146,6 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         food = new Food(true, snake);
         deltaTime = 150;
         timer = new Timer(deltaTime, this);
-        timer.start();
         snake.setDirection(direction.UP);
         snake2.setDirection(direction.DOWN);
         isPaused = false;
@@ -171,6 +170,10 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         this.main = main;
         configDialog = new ConfigDialog(main, true, this);
 
+    }
+    
+    public void startGame(){
+        timer.start();
     }
 
     @Override

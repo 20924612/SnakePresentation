@@ -16,8 +16,6 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         board1.setMainFrame(this);
-        board1.setScoreBoard(scoreBoard1);
-        board1.setScoreBoard2(scoreBoard2);
 
     }
 
@@ -107,10 +105,15 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        scoreBoard1.setText("");
+        scoreBoard1.setText("");
         initComponents();
+        board1.setScoreBoard(scoreBoard1);
+        board1.setScoreBoard2(scoreBoard2);
         scoreBoard1.reset();
         scoreBoard2.reset();
-       board1.requestFocusInWindow();
+        board1.requestFocusInWindow();
+        board1.startGame();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
