@@ -27,7 +27,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         makeCollision();
 
         if (snake.eatedFood(food)) {
-            if (snake.eatedFood(specialFood) == true) {
+            if (specialFood != null && snake.eatedFood(specialFood) == true) {
                 snake.growSnake(5);
                 snake.eatFood = false;
                 scoreBoard1.increment(5);
@@ -39,7 +39,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
                 scoreBoard1.increment(1);
 
             }
-            if (snake2.eatedFood(specialFood) == true) {
+            if (specialFood != null && snake2.eatedFood(specialFood) == true) {
                 snake2.growSnake(5);
                 snake2.eatFood = false;
                 scoreBoard2.increment(5);
@@ -134,7 +134,6 @@ public class Board extends javax.swing.JPanel implements ActionListener {
     private Direction direction;
     private boolean isPaused;
     private Main main;
-    private ScoreBoard scoreBoard;
     private ConfigDialog configDialog;
     private Wall wall;
     private SpecialFood specialFood;
@@ -145,8 +144,6 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         snake2 = new Snake(5);
         wall = new Wall();
         food = new Food(true, snake);
-        scoreBoard1 = new ScoreBoard();
-        scoreBoard2 = new ScoreBoard();
         deltaTime = 150;
         timer = new Timer(deltaTime, this);
         timer.start();
@@ -162,8 +159,8 @@ public class Board extends javax.swing.JPanel implements ActionListener {
 
     }
 
-    public void setScoreBoard(ScoreBoard scoreBoard) {
-        this.scoreBoard = scoreBoard;
+    public void setScoreBoard(ScoreBoard scoreBoard1) {
+        this.scoreBoard1 = scoreBoard1;
     }
 
     public void setScoreBoard2(ScoreBoard scoreBoard2) {

@@ -32,20 +32,24 @@ public class Food implements ActionListener {
     }
 
     public void generatePosition(Snake snake, Snake snake2, Wall wall) {
-        //Node node = null;
-        randomRow = (int) (Math.random() * Config.NUM_ROWS);
-        randomCol = (int) (Math.random() * Config.NUM_COLS);
-        for (int i = 1; snake.getBody().size() > i; i++) {
-            if (randomRow == snake.getBody().get(i).getRow() && randomCol == snake.getBody().get(i).getCol()) {
-                generatePosition(snake, snake2, wall);
-            }
-        }
+        boolean collision = true;
 
-        for (Node node : wall.list) {
-            if (randomRow == node.getRow() && randomCol == node.getCol()) {
-                generatePosition(snake, snake2, wall);
+        while (collision) {
+            randomRow = (int) (Math.random() * Config.NUM_ROWS);
+            randomCol = (int) (Math.random() * Config.NUM_COLS);
+            collision = false;
+            for (Node node : snake.getBody()) {
+                if (node.getRow() == randomRow && node.getCol() == randomCol) {
+                    collision = true;
+                    break;
+                }
             }
-        }
+            for(Node node : wall.list){
+                if(randomRow == node.getRow() && randomCol == node.getCol()){
+                    collision = true;
+                }
+            }
+}
     }
 
     public void paint(Graphics2D g, int squareWidth, int squareHeight) {
