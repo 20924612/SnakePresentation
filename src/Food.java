@@ -31,13 +31,19 @@ public class Food implements ActionListener {
         timer.start();
     }
 
-    public void generatePosition(Snake snake, Snake snake2) {
-        Node node = null;
+    public void generatePosition(Snake snake, Snake snake2, Wall wall) {
+        //Node node = null;
         randomRow = (int) (Math.random() * Config.NUM_ROWS);
         randomCol = (int) (Math.random() * Config.NUM_COLS);
         for (int i = 1; snake.getBody().size() > i; i++) {
             if (randomRow == snake.getBody().get(i).getRow() && randomCol == snake.getBody().get(i).getCol()) {
-                generatePosition(snake, snake2);
+                generatePosition(snake, snake2, wall);
+            }
+        }
+
+        for (Node node : wall.list) {
+            if (randomRow == node.getRow() && randomCol == node.getCol()) {
+                generatePosition(snake, snake2, wall);
             }
         }
     }

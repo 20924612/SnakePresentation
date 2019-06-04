@@ -101,7 +101,7 @@ public class ConfigDialog extends javax.swing.JDialog {
     private void buttonOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOkActionPerformed
         // TODO add your handling code here
         Config.getInstance().setLevel(comboLevel.getSelectedIndex());
-        board.requestFocusInWindow(); // We have to do this when focus between different dialogs
+        board.requestFocusInWindow(); 
         initComponents();
         dispose();
     }//GEN-LAST:event_buttonOkActionPerformed

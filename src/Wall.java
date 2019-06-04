@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Wall {
 
-    private List<Node> list;
+    public List<Node> list;
 
     public Wall() {
         list = new ArrayList<Node>();
@@ -65,7 +65,7 @@ public class Wall {
         return false;
     }
 
-    private void createWalls() {
+    public void createWalls() {
         switch (Config.getInstance().getLevel()) {
             case 3:
                 list.add(new Node(12, 5));

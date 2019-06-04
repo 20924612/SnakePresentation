@@ -21,41 +21,38 @@ import javax.swing.Timer;
  */
 public class Board extends javax.swing.JPanel implements ActionListener {
 
-    private int counterFood = 0;
-
     public void actionPerformed(ActionEvent ae) {
         snake.move();
         //snake2.move();
         makeCollision();
 
-        if (snake.eatedFood(specialFood) == true && counterFood == 5) {
-            snake.growSnake(5);
-            snake.eatFood = false;
-            scoreBoard1.increment(5);
-        }
-        if (snake.eatedFood(food) == true && counterFood != 5) {
-            counterFood++;
-            snake.growSnake(1);
-            food.generatePosition(snake, snake2);
-            snake.eatFood = false;
-            scoreBoard1.increment(1);
+        if (snake.eatedFood(food)) {
+            if (snake.eatedFood(specialFood) == true) {
+                snake.growSnake(5);
+                snake.eatFood = false;
+                scoreBoard1.increment(5);
+            }
+            if (snake.eatedFood(food) == true) {
+                snake.growSnake(1);
+                food.generatePosition(snake, snake2, wall);
+                snake.eatFood = false;
+                scoreBoard1.increment(1);
 
+            }
+            if (snake2.eatedFood(specialFood) == true) {
+                snake2.growSnake(5);
+                snake2.eatFood = false;
+                scoreBoard2.increment(5);
+            }
+            if (snake2.eatedFood(food) == true) {
+                snake2.growSnake(1);
+                food.generatePosition(snake, snake2, wall);
+                snake2.eatFood = false;
+                scoreBoard2.increment(1);
+            }
         }
-        if (snake2.eatedFood(specialFood) == true && counterFood == 5) {
-            snake2.growSnake(5);
-            snake2.eatFood = false;
-            scoreBoard2.increment(5);
-        }
-        if (snake2.eatedFood(food) == true && counterFood != 5) {
-            counterFood++;
-            snake2.growSnake(1);
-            food.generatePosition(snake, snake2);
-            snake2.eatFood = false;
-            scoreBoard2.increment(1);
 
-        }
-        
-        if(wall.colideWalls(snake, snake.getDirection()) || wall.colideWalls(snake2, snake2.getDirection())){
+        if (wall.colideWalls(snake, snake.getDirection()) || wall.colideWalls(snake2, snake2.getDirection())) {
             gameOver();
         }
         repaint();
@@ -120,7 +117,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
                         snake2.setDirection(Direction.RIGHT);
                     }
                     break;
-                case KeyEvent.VK_BACK_SPACE:
+                case KeyEvent.VK_T:
                     pause();
             }
         }
@@ -136,11 +133,11 @@ public class Board extends javax.swing.JPanel implements ActionListener {
     private ScoreBoard scoreBoard2;
     private Direction direction;
     private boolean isPaused;
-    private SpecialFood specialFood;
     private Main main;
     private ScoreBoard scoreBoard;
     private ConfigDialog configDialog;
     private Wall wall;
+    private SpecialFood specialFood;
 
     public Board() {
         super();
@@ -148,7 +145,6 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         snake2 = new Snake(5);
         wall = new Wall();
         food = new Food(true, snake);
-        specialFood = new SpecialFood(true, snake);
         scoreBoard1 = new ScoreBoard();
         scoreBoard2 = new ScoreBoard();
         deltaTime = 150;
@@ -162,8 +158,7 @@ public class Board extends javax.swing.JPanel implements ActionListener {
         addKeyListener(keyAdapter);
         addKeyListener(keyAdapter2);
         setFocusable(true);
-        food.generatePosition(snake, snake2);
-        specialFood.generatePosition(snake, snake2);
+        food.generatePosition(snake, snake2, wall);
 
     }
 
@@ -176,7 +171,6 @@ public class Board extends javax.swing.JPanel implements ActionListener {
     }
 
     public void setMainFrame(Main main) {
-        System.out.println("Board.setMainFrame()");
         this.main = main;
         configDialog = new ConfigDialog(main, true, this);
 
